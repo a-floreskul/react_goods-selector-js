@@ -14,27 +14,6 @@ export const goods = [
   'Jam',
   'Garlic',
 ];
-const Good = ({ good, selectedGood, select }) => (
-  <tr
-    data-cy="Good"
-    className={
-      good === selectedGood ? 'has-background-success-light' : 'is-vcentered'
-    }
-  >
-    <td>
-      <button
-        data-cy={good === selectedGood ? 'RemoveButton' : 'AddButton'}
-        type="button"
-        className={`button ${good === selectedGood ? 'is-info' : ''}`}
-        onClick={() => select(good)}
-      >
-        {good === selectedGood ? '-' : '+'}
-      </button>
-    </td>
-
-    <td data-cy="GoodTitle">{good}</td>
-  </tr>
-);
 
 export const App = () => {
   const [selectedGood, setSelectedGood] = useState('Jam');
@@ -69,7 +48,39 @@ export const App = () => {
       <table className="table">
         <tbody>
           {goods.map(good => (
-            <Good good={good} selectedGood={selectedGood} select={select} />
+            <tr
+              data-cy="Good"
+              key={good}
+              className={
+                good === selectedGood
+                  ? 'has-background-success-light'
+                  : 'is-vcentered'
+              }
+            >
+              <td>
+                {good === selectedGood ? (
+                  <button
+                    data-cy="RemoveButton"
+                    type="button"
+                    className="button is-info"
+                    onClick={() => select(good)}
+                  >
+                    -
+                  </button>
+                ) : (
+                  <button
+                    data-cy="AddButton"
+                    type="button"
+                    className="button"
+                    onClick={() => select(good)}
+                  >
+                    +
+                  </button>
+                )}
+              </td>
+
+              <td data-cy="GoodTitle">{good}</td>
+            </tr>
           ))}
         </tbody>
       </table>
